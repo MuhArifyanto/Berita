@@ -1,0 +1,150 @@
+<header class="header" [class.header--scrolled]="scrolled()">
+  <div class="container header__inner">
+    <a class="logo" (click)="goHome()" tabindex="0" role="button" (keydown.enter)="goHome()" aria-label="Berita Kini beranda" style="cursor:pointer">
+      <span class="logo__mark" aria-hidden="true">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <defs>
+            <mask id="berita-mask-v-nav">
+              <rect width="24" height="24" fill="white" stroke="none" />
+              <line x1="4" y1="7" x2="10" y2="7" stroke="black" stroke-width="5" stroke-linecap="round" />
+              <line x1="14" y1="17" x2="20" y2="17" stroke="black" stroke-width="5" stroke-linecap="round" />
+            </mask>
+            <mask id="berita-mask-h-nav">
+              <rect width="24" height="24" fill="white" stroke="none" />
+              <line x1="17" y1="4" x2="17" y2="10" stroke="black" stroke-width="5" stroke-linecap="round" />
+              <line x1="7" y1="14" x2="7" y2="20" stroke="black" stroke-width="5" stroke-linecap="round" />
+            </mask>
+          </defs>
+          <g transform="rotate(45 12 12)">
+            <rect x="7" y="2" width="10" height="20" rx="5" mask="url(#berita-mask-v-nav)" />
+            <rect x="2" y="7" width="20" height="10" rx="5" mask="url(#berita-mask-h-nav)" />
+          </g>
+        </svg>
+      </span>
+      <span class="logo__text">Berita Kini</span>
+    </a>
+
+    <nav class="nav" aria-label="Utama">
+      <a class="nav__link" [class.nav__link--active]="isHomeActive()" (click)="goHome()" tabindex="0" role="button" (keydown.enter)="goHome()" style="cursor:pointer">Beranda</a>
+      @for (link of navItems; track link.label) {
+        <a
+          class="nav__link"
+          [class.nav__link--active]="isActive(link.slug)"
+          (click)="goToCategory(link.slug)" tabindex="0" role="button" (keydown.enter)="goToCategory(link.slug)" style="cursor:pointer"
+        >{{ link.label }}</a>
+      }
+    </nav>
+
+    <div class="header__actions">
+      <button type="button" class="search-btn" aria-label="Cari berita di seluruh situs" (click)="openSearch()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+          <circle cx="11" cy="11" r="8" />
+          <path d="M21 21l-4.35-4.35" />
+        </svg>
+      </button>
+      <button
+        type="button"
+        class="nav-toggle"
+        [class.nav-toggle--open]="menuOpen()"
+        aria-label="Menu"
+        [attr.aria-expanded]="menuOpen()"
+        (click)="toggleMenu()"
+      >
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  @if (menuOpen()) {
+    <div class="mobile-menu">
+      <nav class="mobile-nav">
+        <a class="mobile-nav__link" [class.mobile-nav__link--active]="isHomeActive()" (click)="goHome()" tabindex="0" role="button" (keydown.enter)="goHome()" style="cursor:pointer">Beranda</a>
+        @for (link of navItems; track link.label) {
+          <a
+            class="mobile-nav__link"
+            [class.mobile-nav__link--active]="isActive(link.slug)"
+            (click)="goToCategory(link.slug)" tabindex="0" role="button" (keydown.enter)="goToCategory(link.slug)" style="cursor:pointer"
+          >{{ link.label }}</a>
+        }
+      </nav>
+    </div>
+  }
+</header>
+
+@if (menuOpen()) {
+  <div class="menu-backdrop" (click)="closeMenu()" aria-hidden="true"></div>
+}
+
+<!-- === GLOBAL SEARCH OVERLAY === -->
+@if (searchOpen()) {
+  <div class="search-overlay" (click)="closeSearch()">
+    <div class="search-modal" (click)="$event.stopPropagation()">
+      <div class="search-modal__head">
+        <svg class="search-modal__icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8" /><path d="M21 21l-4.35-4.35" />
+        </svg>
+        <input 
+          #searchInput
+          type="search" 
+          class="search-modal__input" 
+          placeholder="Cari berita berdasarkan judul, kategori, atau topik..."
+          [value]="searchQuery()"
+          (input)="onSearchInput($event)"
+          aria-label="Kotak pencarian global"
+        />
+        <button type="button" class="search-modal__close" aria-label="Tutup pencarian" (click)="closeSearch()">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="search-modal__body">
+        @if (searchQuery().length === 0) {
+          <div class="search-modal__empty">
+            <p>Mulai ketikkan kata kunci untuk mencari berita terkini, terpopuler, dan lainnya.</p>
+            <div class="search-modal__suggestions">
+              <span class="search-modal__hint">Cobalah: </span>
+              <button class="search-modal__badge" (click)="searchQuery.set('PSSI')">PSSI</button>
+              <button class="search-modal__badge" (click)="searchQuery.set('Investasi')">Investasi</button>
+              <button class="search-modal__badge" (click)="searchQuery.set('Cuaca')">Cuaca</button>
+            </div>
+          </div>
+        } @else {
+          
+          <div class="search-modal__results">
+            <h3 class="search-modal__results-title">
+              Hasil Pencarian ({{ searchResults().length }})
+            </h3>
+            
+            @if (searchResults().length === 0) {
+              <div class="search-modal__no-results">
+                <p>Tidak ada berita yang cocok dengan "<strong>{{ searchQuery() }}</strong>".</p>
+                <p>Silakan coba kata kunci lain atau periksa ejaan Anda.</p>
+              </div>
+            } @else {
+              <ul class="search-results-list">
+                @for (res of searchResults(); track res.id) {
+                  <li>
+                    <a class="search-result-item" (click)="goToArticle(res.id)" tabindex="0" role="button" (keydown.enter)="goToArticle(res.id)" style="cursor:pointer">
+                      <img class="search-result-item__img" [src]="res.image.small" [alt]="res.title" width="60" height="60" />
+                      <div class="search-result-item__body">
+                        <span class="search-result-item__cat" [style.color]="getCategoryColor(res.category)">{{ res.category }}</span>
+                        <h4 class="search-result-item__title">{{ res.title }}</h4>
+                        <span class="search-result-item__date">{{ res.date }}</span>
+                      </div>
+                      <svg class="search-result-item__arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    </a>
+                  </li>
+                }
+              </ul>
+            }
+          </div>
+
+        }
+      </div>
+      
+      <div class="search-modal__footer">
+        <kbd>Esc</kbd> untuk menutup
+      </div>
+    </div>
+  </div>
+}

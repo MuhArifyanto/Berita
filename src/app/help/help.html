@@ -1,0 +1,174 @@
+<div class="help-page">
+
+  <!-- Navbar Component -->
+  <app-navbar></app-navbar>
+
+  <main class="help-main">
+    <div class="container help-container">
+      
+      <!-- HEADER -->
+      <div class="help-header">
+        <h1 class="help-title">Bantuan & Informasi</h1>
+        <p class="help-subtitle">Selamat datang di Pusat Bantuan Berita Kini. Kami siap mendukung kebutuhan informasi Anda.</p>
+      </div>
+
+      <!-- TABS / NAVIGATION -->
+      <nav class="help-nav">
+        <a [href]="'/bantuan/kontak'" class="help-tab" [class.active]="currentSection() === 'kontak'">Kontak Kami</a>
+        <a [href]="'/bantuan/laporan'" class="help-tab" [class.active]="currentSection() === 'laporan'">Laporan Pembajakan</a>
+        <a [href]="'/bantuan/kebijakan'" class="help-tab" [class.active]="currentSection() === 'kebijakan'">Kebijakan & Privasi</a>
+      </nav>
+
+      <!-- CONTENT PANELS -->
+      <div class="help-content-wrap">
+        
+        <!-- SECTION: KONTAK KAMI -->
+        @if (currentSection() === 'kontak') {
+          <div class="help-panel">
+            <h2 class="panel-title">Hubungi Tim Berita Kini</h2>
+            <p class="panel-desc">Jika Anda memiliki pertanyaan, saran, pengajuan kerja sama, atau keluhan terkait artikel kami, silakan gunakan formulir di bawah ini untuk menghubungi tim Redaksi.</p>
+            
+            <form class="help-form" (submit)="submitAction($event)">
+              <div class="form-row">
+                <div class="form-group">
+                  <label>Nama Lengkap</label>
+                  <input type="text" placeholder="Masukkan nama..." required />
+                </div>
+                <div class="form-group">
+                  <label>Email Anda</label>
+                  <input type="email" placeholder="nama@email.com" required />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Judul / Subjek Pesan</label>
+                <input type="text" placeholder="Tuliskan subjek..." required />
+              </div>
+              <div class="form-group">
+                <label>Pesan Anda</label>
+                <textarea rows="5" placeholder="Tuliskan pesan lengkap di sini..." required></textarea>
+              </div>
+              <button type="submit" class="submit-btn" style="background:#2563eb;">Kirim Pesan Hubungi Kami</button>
+            </form>
+            
+            <div class="contact-info">
+              <p>📍 <strong>Kantor Redaksi:</strong> Gd. Berita Kini, Jakarta Pusat 10110.</p>
+              <p>📧 <strong>Email Redaksi:</strong> redaksi@beritakini.id</p>
+            </div>
+          </div>
+        }
+
+        <!-- SECTION: LAPORAN PEMBAJAKAN -->
+        @if (currentSection() === 'laporan') {
+          <div class="help-panel">
+            <h2 class="panel-title">Laporan Pembajakan dan Pelanggaran Hak Cipta</h2>
+            <p class="panel-desc">Berita Kini sangat menghargai dan melindungi konten Orisinal Jurnalistik. Jika Anda menemukan konten, foto, atau artikel kami disalin dan diterbitkan ulang (Plagiat/Copass) tanpa izin tertulis, laporkan langsung kepada kami.</p>
+            
+            <div class="alert warn">
+              <strong>Peringatan Pencurian Konten:</strong> Kami berhak memproses secara hukum setiap bentuk penduplikatan ilegal artikel beritakini.id.
+            </div>
+
+            <form class="help-form" (submit)="submitAction($event)">
+              <div class="form-group">
+                <label>Tautan Asli (Artikel Berita Kini)</label>
+                <input type="url" placeholder="https://beritakini.id/berita/..." required />
+              </div>
+              <div class="form-group">
+                <label>Tautan Bukti Pembajakan (Website Pihak Ketiga)</label>
+                <input type="url" placeholder="Sertakan URL yang menjiplak" required />
+              </div>
+              <div class="form-group">
+                <label>Keterangan Tambahan / Bukti Temuan</label>
+                <textarea rows="4" placeholder="Detail tentang pembajakan yang ditemukan..." required></textarea>
+              </div>
+              <button type="submit" class="submit-btn" style="background:#dc2626;">Kirim Laporan Pelanggaran</button>
+            </form>
+          </div>
+        }
+
+        <!-- SECTION: KEBIJAKAN PRIVASI -->
+        @if (currentSection() === 'kebijakan') {
+          <div class="help-panel">
+            <h2 class="panel-title">Kebijakan Privasi & Syarat Ketentuan</h2>
+            
+            <div class="policy-text">
+              <h3>1. Pendahuluan</h3>
+              <p>Kebijakan Privasi ini mengatur bagaimana Berita Kini mengumpulkan, menggunakan, memelihara, dan mengungkapkan informasi dari pengguna yang mengunjungi portal web kami.</p>
+
+              <h3>2. Pengumpulan Data</h3>
+              <p>Kami mungkin mengumpulkan beberapa informasi pribadi untuk memberikan pengalaman membaca yang lebih relevan dan mendukung optimasi tayangan iklan. Kami tidak akan menjual atau menyewakan informasi pembaca kami kepada pihak ketiga yang tidak bertanggung jawab.</p>
+
+              <h3>3. Kode Etik Jurnalistik</h3>
+              <p>Kami menjalankan peliputan sesuai dengan UU Pers yang berlaku di Republik Indonesia serta berpegang teguh pada independensi, faktualitas, dan keseimbangan sumber informasi berita.</p>
+
+              <h3>4. Cookie dan Pelacakan</h3>
+              <p>Kami menggunakan *cookies* pada *browser* Anda untuk keperluan fitur teknokratik, analitik kunjungan, dan personalisasi keamanan. Anda setuju dengan penggunaan dasar ini ketika mengakses platform.</p>
+              
+              <br>
+              <p><strong>Pembaruan Terakhir:</strong> 1 April 2026. Untuk pertanyaan teknis legal, hubungi <a style="color:blue" [href]="'/bantuan/kontak'">Tim Kontak Kami</a>.</p>
+            </div>
+          </div>
+        }
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer__grid">
+      <div class="footer__brand">
+        <a class="logo logo--light" href="/">
+          <span class="logo__mark" aria-hidden="true">
+            <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <defs>
+                <mask id="berita-mask-v-help">
+                  <rect width="24" height="24" fill="white" stroke="none" />
+                  <line x1="4" y1="7" x2="10" y2="7" stroke="black" stroke-width="5" stroke-linecap="round" />
+                  <line x1="14" y1="17" x2="20" y2="17" stroke="black" stroke-width="5" stroke-linecap="round" />
+                </mask>
+                <mask id="berita-mask-h-help">
+                  <rect width="24" height="24" fill="white" stroke="none" />
+                  <line x1="17" y1="4" x2="17" y2="10" stroke="black" stroke-width="5" stroke-linecap="round" />
+                  <line x1="7" y1="14" x2="7" y2="20" stroke="black" stroke-width="5" stroke-linecap="round" />
+                </mask>
+              </defs>
+              <g transform="rotate(45 12 12)">
+                <rect x="7" y="2" width="10" height="20" rx="5" mask="url(#berita-mask-v-help)" />
+                <rect x="2" y="7" width="20" height="10" rx="5" mask="url(#berita-mask-h-help)" />
+              </g>
+            </svg>
+          </span>
+          <span class="logo__text">Berita Kini</span>
+        </a>
+        <p class="footer__about">Portal berita digital terpercaya untuk memberikan wawasan faktual di Indonesia.</p>
+        <p class="footer__copy">© {{ year }} Berita Kini. Hak cipta dilindungi.</p>
+      </div>
+
+      <div>
+        <h3 class="footer__heading">Telusuri</h3>
+        <ul class="footer__list">
+          @for (x of footerExplore; track x.label) {
+            <li><a [href]="x.link">{{ x.label }}</a></li>
+          }
+        </ul>
+      </div>
+
+      <div>
+        <h3 class="footer__heading">Bantuan</h3>
+        <ul class="footer__list">
+          @for (x of footerHelp; track x.label) {
+            <li><a [href]="x.link">{{ x.label }}</a></li>
+          }
+        </ul>
+      </div>
+    </div>
+    
+    <!-- Footer Bottom Area -->
+    <div class="footer__bottom" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top:2rem; padding-top:2rem;">
+      <div class="container" style="display: flex; justify-content: space-between; font-size: 0.875rem; color: #9ca3af;">
+        <p>Portal berita digital Indonesia • Dibuat dengan ❤️</p>
+      </div>
+    </div>
+  </footer>
+
+</div>
