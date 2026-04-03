@@ -2,7 +2,7 @@
 
 **Berita Kini** adalah aplikasi web portal berita modern berbasis **Angular 21**. Aplikasi ini menyajikan berita terbaru dari berbagai kategori secara real-time dengan antarmuka yang bersih, responsif, dan performa tinggi yang dioptimalkan untuk kecepatan akses dan SEO.
 
-![Uploading {30C909FA-8056-413C-B2A2-4752E0A1D8F8}.png…]
+<img width="1353" height="595" alt="portal_berita" src="https://github.com/user-attachments/assets/fe6b0c0a-cede-4ab6-bd11-0a667227f9a0" />
 
 ## ✨ Fitur Utama
 
